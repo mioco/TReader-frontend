@@ -1,0 +1,60 @@
+.logo {
+  width: 120px;
+  height: 31px;
+  background: rgba(255,255,255,.2);
+  float: left;
+  img {
+    height: 100%;
+    margin-right: 8px;
+  }
+}
+
+.ant-layout-header {
+  background: #fff;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.ant-layout-header__left {
+  display: flex;
+}
+
+.header {
+  line-height: 62px;
+  display: inline-block;
+  border: none;
+}
+
+.action {
+  float: right;
+}
+
+.menu {
+  li i {
+    margin-right: 8px;
+  }
+}
+
+@media only screen and (max-width: 767.99px) {
+  .ant-layout-header {
+    padding: 0 24px;
+  }
+  .ant-layout-header__left {
+    flex-direction: column;
+    position: relative;
+  }
+  .header {
+    order: 1;
+    line-height: 46px;
+    margin-top: 65px;
+    border-bottom: 1px solid #ddd;
+    width: 100vw;
+    position: absolute;
+    left: -24px;
+  }
+  .search {
+    position: absolute;
+    right: 0;
+  }
+}
