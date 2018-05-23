@@ -13,8 +13,8 @@ let isMobile;
 enquireScreen((b) => {
   isMobile = b;
 });
-@connect(({ login }) => ({
-  login,
+@connect(({ user }) => ({
+  user,
 }))
 export default class BasicLayout extends PureComponent {
   state = {
@@ -28,9 +28,9 @@ export default class BasicLayout extends PureComponent {
     });
   }
   render() {
-    const { routerData, match, login } = this.props;
+    const { routerData, match, user } = this.props;
     return (
-      <Layout className="layout">
+      <Layout className={styles.layout}>
         <GlobalHeader isMobile={isMobile}/>
         <Content className={styles.basicContent}>
           {match.isExact && <HomePage />}
@@ -48,11 +48,11 @@ export default class BasicLayout extends PureComponent {
                 )
               )
             }
-            {!login.status && <Redirect from="/" to="/user/login" />}
+            {!user.status && <Redirect from="/" to="/user/login" />}
           </Switch>
         </Content>
         <Footer style={{ textAlign: 'center' }}>
-          post ©2016 Created by Osyo
+          TReader ©2016 Created by Osyo
         </Footer>
       </Layout>
     );

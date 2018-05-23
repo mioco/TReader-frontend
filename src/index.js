@@ -16,4 +16,5 @@ app.router(require('./router').default);
 // 5. Start
 app.start('#root');
 
+console.log(process.env.NODE_ENV)
 export default app._store;

@@ -18,9 +18,33 @@ export async function register(params) {
   });
 }
 
-export async function getCaptcha(payload) {
+export async function getCaptchaCode(payload) {
   return request('/api/user/captcha', {
     method: 'POST',
     body: payload,
   })
+}
+
+export async function getResetUrl(payload) {
+  return request('/api/user/getreseturl', {
+    method: 'POST',
+    body: payload,
+  })
+}
+
+export async function authority() {
+  return request('/api/user/authority', {
+    method: 'POST',
+  })
+}
+
+export async function addSubscriptionUrl(payload) {
+  return request('/api/user/addSubscriptionUrl', {
+    method: 'POST',
+    body: payload
+  })
+}
+
+export async function getSubscriptionUrl(uid) {
+  return request(`/api/user/getSubscriptionUrl?uid=${uid}`)
 }

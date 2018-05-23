@@ -1,72 +1,67 @@
 import React from 'react';
 import { connect } from 'dva';
 import { Link } from 'dva/router';
-import { Form, Input, Button, Checkbox } from 'antd';
-import './form.less';
+import { Form, Input, Button, Checkbox, Col, Row, Icon } from 'antd';
 
 const FormItem = Form.Item;
 
+@Form.create()
 @connect(({ user }) => ({
   user,
 }))
-@Form.create()
-export default class Login extends React.Component {
+export default class ResetPasswd extends React.Component {
   state = {
     loading: false,
   }
-  componentWillMount() {
-    const { user: { status }, history } = this.props;
-    status && history.push("/");
-  }
   handleSubmit = async (e) => {
     e.preventDefault();
-    const { form, dispatch, history } = this.props;
+    const { form, dispatch } = this.props;
     form.validateFields(async (err, values) => {
       if (!err) {
         this.setState({
           loading: true,
         });
-        dispatch({
-          type: 'user/login',
+        await dispatch({
+          type: 'user/user',
           payload: values,
         });
         this.setState({
           loading: false,
         });
-        history.push("/");
       }
     });
+  }
+  componentWillMount() {
+    const captchaImg = this.state.captchaImgUrl + Math.random();
+    this.setState({ captchaImg });
+  }
+  getCaptchaImgUrl = () => {
+    this.setState({
+      captchaImg: this.state.captchaImgUrl + Math.random(),
+    })
   }
   render() {
     const { getFieldDecorator } = this.props.form;
     return (
       <Form onSubmit={this.handleSubmit} className="login-form">
         <FormItem>
-          {getFieldDecorator('email', {
-            rules: [{ required: true }],
+          {getFieldDecorator('password', {
+            rules: [{ required: true, message: '请输入密码!' }],
           })(
-            <div>
-              <label>邮箱</label>
-              <Input />
-            </div>
+            <Input type="password" placeholder="密码" />
           )}
         </FormItem>
         <FormItem>
           {getFieldDecorator('password', {
-            rules: [{ required: true }],
+            rules: [{ required: true, message: '请输入确认密码!' }],
           })(
-            <div>
-              <label>密码</label>
-              <Input type="password" />
-            </div>
+            <Input type="password" placeholder="确认密码" />
           )}
         </FormItem>
         <FormItem>
-          <Link to="resetpwd" style={{ float: 'right' }} href="">忘记密码</Link>
           <Button type="primary" htmlType="submit" style={{ width: '100%' }} loading={this.state.loading}>
-            登录
+            确定
           </Button>
-          <Link to="/user/register">现在注册!</Link>
         </FormItem>
       </Form>
     );

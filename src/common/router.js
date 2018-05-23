@@ -54,25 +54,31 @@ const dynamicWrapper = (app, models, component) => {
 export const getRouterData = (app) => {
   const routerConfig = {
     '/': {
-      component: dynamicWrapper(app, ['login'], () => import('../layouts/BasicLayout')),
+      component: dynamicWrapper(app, ['user'], () => import('../layouts/BasicLayout')),
     },
     '/topic': {
       component: dynamicWrapper(app, [], () => import('../routes/Topic')),
-    },
-    '/explore': {
-      component: dynamicWrapper(app, [], () => import('../routes/Explore')),
     },
     '/exception/404': {
       component: dynamicWrapper(app, [], () => import('../routes/Exception/404')),
     },
     '/user': {
-      component: dynamicWrapper(app, ['login'], () => import('../layouts/UserLayout')),
+      component: dynamicWrapper(app, ['user'], () => import('../layouts/UserLayout')),
     },
     '/user/login': {
-      component: dynamicWrapper(app, ['login'], () => import('../routes/User/Login')),
+      component: dynamicWrapper(app, ['user'], () => import('../routes/User/Login')),
     },
     '/user/register': {
-      component: dynamicWrapper(app, ['register'], () => import('../routes/User/Register')),
+      component: dynamicWrapper(app, ['user'], () => import('../routes/User/Register')),
+    },
+    '/user/getreseturl': {
+      component: dynamicWrapper(app, [], () => import('../routes/User/ForgetPassword/index')),
+    },
+    '/user/resetpasswd': {
+      component: dynamicWrapper(app, ['user'], () => import('../routes/User/ResetPasswd')),
+    },
+    '/profile': {
+      component: dynamicWrapper(app, ['user'], () => import('../routes/User/Profile')),
     },
     // '/user/:id': {
     //   component: dynamicWrapper(app, [], () => import('../routes/User/SomeComponent')),

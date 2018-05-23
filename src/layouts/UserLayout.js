@@ -1,48 +1,31 @@
 import React from 'react';
 import { Link, Redirect, Switch, Route } from 'dva/router';
-import { Icon, Card } from 'antd';
+import { Icon } from 'antd';
 import { connect } from 'dva';
 import GlobalFooter from '../components/GlobalFooter';
 import styles from './UserLayout.less';
-import logo from '../assets/yay.jpg';
+import logo from '../assets/logo.svg';
 import { getRoutes } from '../utils/utils';
-
-const links = [{
-  key: 'help',
-  title: '帮助',
-  href: '',
-}, {
-  key: 'privacy',
-  title: '隐私',
-  href: '',
-}, {
-  key: 'terms',
-  title: '条款',
-  href: '',
-}];
 
 const copyright = <div>Copyright <Icon type="copyright" /> Osyo</div>;
 
-@connect(({ login }) => ({
-  login,
+@connect(({ user }) => ({
+  user,
 }))
 class UserLayout extends React.Component {
   componentWillMount() {
-    this.props.login.status && this.props.history.push('/');
+    const { user, history, dispatch } = this.props;
+    user.status && history.push('/');
   }
   render() {
-    const { routerData, match, login } = this.props;
+    const { routerData, match, user } = this.props;
     return (
       <div className={styles.container}>
-        <Card className={styles.content}>
+        <div className={styles.content}>
           <div className={styles.top}>
-            <div className={styles.header}>
-              <Link to="/">
-                <img alt="logo" className={styles.logo} src={logo} />
-                <span className={styles.title}>TReader</span>
-              </Link>
-            </div>
-            <div className={styles.desc}>订阅信息</div>
+            <Link to="/">
+              <img alt="logo" className={styles.logo} src={logo} />
+            </Link>
           </div>
           <Switch>
             {getRoutes(match.path, routerData).map(item =>
@@ -55,10 +38,10 @@ class UserLayout extends React.Component {
                 />
               )
             )}
-            <Redirect exact from="/user" to={login.status ? "/" : "/user/login"} />
+            <Redirect exact from="/user" to={user.status ? "/" : "/user/login"} />
           </Switch>
-        </Card>
-        <GlobalFooter links={links} copyright={copyright} />
+        </div>
+        <GlobalFooter className={styles.footer} copyright={copyright} />
       </div>
     );
   }

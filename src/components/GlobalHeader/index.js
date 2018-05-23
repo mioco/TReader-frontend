@@ -1,11 +1,20 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { Menu, Layout, Input, Avatar, Dropdown, Icon } from 'antd';
 import { Link } from 'dva/router';
+import { connect } from 'dva';
 import styles from './index.less';
-import logo from '../../assets/yay.jpg';
+import logo from '../../assets/logo.svg';
 
-export default class GlobalHeader extends PureComponent {
+@connect(({ user }) => ({
+  user,
+}))
+export default class GlobalHeader extends Component {
+  logout = async () => {
+    const { dispatch } = this.props;
+    await dispatch({ type: 'user/logout' });
+  }
   render() {
+    console.log(this.props)
     const { isMobile } = this.props;
     const currentUser = {
       avatar: '',
@@ -13,10 +22,9 @@ export default class GlobalHeader extends PureComponent {
     }
     const menu = (
       <Menu className={styles.menu}>
-        <Menu.Item><Icon type="user" />我的主页</Menu.Item>
-        <Menu.Item><Icon type="setting" />设置</Menu.Item>
+        <Menu.Item><Link to="/profile"><Icon type="user" />控制台</Link></Menu.Item>
         <Menu.Divider />
-        <Menu.Item key="logout"><Icon type="logout" />退出</Menu.Item>
+        <Menu.Item key="logout"><a onClick={this.logout}><Icon type="logout" />退出</a></Menu.Item>
       </Menu>
     );
     return (
@@ -32,7 +40,6 @@ export default class GlobalHeader extends PureComponent {
             className={styles.header}
           >
             <Menu.Item key="1"><Link to="/">首页</Link></Menu.Item>
-            <Menu.Item key="2"><Link to="/explore">发现</Link></Menu.Item>
             <Menu.Item key="3"><Link to="/topic">话题</Link></Menu.Item>
           </Menu>
           <div className={styles.search}>

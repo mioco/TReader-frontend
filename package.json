@@ -16,7 +16,8 @@
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
     "react-document-title": "^2.0.3",
-    "react-dom": "^16.2.0"
+    "react-dom": "^16.2.0",
+    "sw-precache-webpack-plugin": "^0.11.4"
   },
   "devDependencies": {
     "babel-plugin-dva-hmr": "^0.3.2",

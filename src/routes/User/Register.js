@@ -20,7 +20,7 @@ export default class Register extends React.Component {
   };
   handleSubmit = (e) => {
     e.preventDefault();
-    const { form, dispatch } = this.props;
+    const { form, dispatch, history } = this.props;
     form.validateFieldsAndScroll(async (err, values) => {
       if (!err) {
         this.setState({
@@ -28,7 +28,7 @@ export default class Register extends React.Component {
         });
         const payload = form.getFieldsValue(['email', 'captcha', 'password']);
         await dispatch({
-          type: 'register/register',
+          type: 'user/register',
           payload,
         });
         this.setState({
@@ -84,8 +84,8 @@ export default class Register extends React.Component {
         }, 1000);
         countdown(60);
         const res = await dispatch({
-          type: 'register/getCaptcha',
-          payload: { email }
+          type: 'user/sendCaptchaCode',
+          payload: { email },
         });
         if (res === 'Error') {
           this.setState({
